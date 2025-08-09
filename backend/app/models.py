@@ -1,12 +1,15 @@
+# ruff: noqa: E402
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, text
 from sqlalchemy.orm import relationship
 from .db import Base
+
 
 class Tenant(Base):
     __tablename__ = "tenants"
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False, unique=True)
     created_at = Column(DateTime(timezone=True), server_default=text("NOW()"))
+
 
 class User(Base):
     __tablename__ = "users"
@@ -24,10 +27,14 @@ class User(Base):
 class Candidate(Base):
     __tablename__ = "candidates"
     id = Column(Integer, primary_key=True)
-    tenant_id = Column(Integer, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
+    tenant_id = Column(
+        Integer, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False
+    )
     full_name = Column(String(255), nullable=False)
     phone = Column(String(50), nullable=True)
-    stage_code = Column(String(50), nullable=False, default="new")  # ссылается на stages.code (логически)
+    stage_code = Column(
+        String(50), nullable=False, default="new"
+    )  # ссылается на stages.code (логически)
     created_at = Column(DateTime(timezone=True), server_default=text("NOW()"))
 
     tenant = relationship("Tenant")
@@ -38,11 +45,14 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey, Numeric, Text
 from sqlalchemy.orm import relationship
 from app.db import Base
 
+
 class EmployeeProfile(Base):
     __tablename__ = "employee_profiles"
     id = Column(Integer, primary_key=True)
     tenant_id = Column(Integer, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True, index=True)
+    user_id = Column(
+        Integer, ForeignKey("users.id"), nullable=False, unique=True, index=True
+    )
     first_name = Column(String)
     last_name = Column(String)
     middle_name = Column(String)
@@ -55,6 +65,7 @@ class EmployeeProfile(Base):
     fire_date = Column(Date)
     user = relationship("User", foreign_keys=[user_id])
     manager = relationship("User", foreign_keys=[manager_id])
+
 
 class EmploymentTerm(Base):
     __tablename__ = "employment_terms"

@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional, List
 from uuid import UUID
+
 
 class CandidateCreate(BaseModel):
     first_name: str
@@ -9,12 +10,14 @@ class CandidateCreate(BaseModel):
     languages: List[str] = []
     stage: Optional[str] = None  # опционально
 
+
 class CandidateUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     phone: Optional[str] = None
     languages: Optional[List[str]] = None
     stage: Optional[str] = None
+
 
 class CandidateOut(BaseModel):
     id: UUID

@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import date
 
+
 class ProfileIn(BaseModel):
     first_name: str
     last_name: str
@@ -14,6 +15,7 @@ class ProfileIn(BaseModel):
     hire_date: Optional[date] = None
     fire_date: Optional[date] = None
 
+
 class TermsIn(BaseModel):
     valid_from: Optional[date] = None
     valid_to: Optional[date] = None
@@ -22,6 +24,7 @@ class TermsIn(BaseModel):
     work_hours_per_week: Optional[int] = None
     currency: Optional[str] = None
     comment: Optional[str] = None
+
 
 class CreateUserProfileIn(BaseModel):
     email: EmailStr

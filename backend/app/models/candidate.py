@@ -15,11 +15,16 @@ _stage_enum = sa.Enum(
     native_enum=True,
 )
 
+
 class Candidate(Base, UUIDMixin, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "candidates"
     first_name: Mapped[str] = mapped_column(sa.String(100))
-    last_name: Mapped[str]  = mapped_column(sa.String(100))
+    last_name: Mapped[str] = mapped_column(sa.String(100))
     phone: Mapped[str | None] = mapped_column(sa.String(32), index=True)
     languages: Mapped[List[str]] = mapped_column(ARRAY(sa.String), default=list)
-    stage: Mapped[CandidateStage] = mapped_column(_stage_enum, default=CandidateStage.NEW)
-    owner_id: Mapped[_UUID | None] = mapped_column(sa.ForeignKey("users.id"), nullable=True)
+    stage: Mapped[CandidateStage] = mapped_column(
+        _stage_enum, default=CandidateStage.NEW
+    )
+    owner_id: Mapped[_UUID | None] = mapped_column(
+        sa.ForeignKey("users.id"), nullable=True
+    )
